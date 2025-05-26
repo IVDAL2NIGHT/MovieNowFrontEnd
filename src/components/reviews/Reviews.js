@@ -7,11 +7,13 @@ import { username } from '../../api/axiosConfig';
 
 import React from 'react'
 
+
 const Reviews = ({getMovieData,movie,reviews,setReviews}) => {
 
     const revText = useRef();
     let params = useParams();
     const movieId = params.movieId;
+    const ratingRef = useRef();
 
     useEffect(()=>{
         getMovieData(movieId);
@@ -21,12 +23,16 @@ const Reviews = ({getMovieData,movie,reviews,setReviews}) => {
         e.preventDefault();
 
         const rev = revText.current;
+        const rating = ratingRef.current.value;
+
 
         try
         {
              await api.post("/api/v1/reviews",{reviewBody:rev.value,imdbId:movieId, username:username});
+             await api.post("/api/v1/rates",{imdbId:movieId, username:username, rating:rating});
 
-            const updatedReviews = [...reviews, {body:rev.value}];
+
+            const updatedReviews = [...reviews, {body:rev.value, username:username, rating:rating} ];
     
             rev.value = "";
     
@@ -47,6 +53,27 @@ const Reviews = ({getMovieData,movie,reviews,setReviews}) => {
         <Row>
             <Col><h3>Reviews</h3></Col>
         </Row>
+        <Row>
+            <Col>
+                {/* Mostrar título de la película */}
+                <div>
+                    <strong>Título:</strong> {movie?.title ?? "N/A"}
+                </div>
+                {/* Mostrar título de la película */}
+                <div>
+                    <strong>Fecha de lanzamiento:</strong> {movie?.releaseDate ?? "N/A"}
+                </div>
+                {/* Mostrar géneros */}
+                <div>
+                    <strong>Géneros:</strong> {movie?.genres?.join(", ") ?? "N/A"}
+                </div>
+                {/* Mostrar average rating */}
+                <div>
+                    <strong>Calificación Media:</strong> {movie?.averageRating ?? "N/A"}
+                </div>
+                
+            </Col>
+        </Row>
         <Row className="mt-2">
             <Col>
                 <img src={movie?.poster} alt="" />
@@ -56,7 +83,7 @@ const Reviews = ({getMovieData,movie,reviews,setReviews}) => {
                     <>
                         <Row>
                             <Col>
-                                <ReviewForm handleSubmit={addReview} revText={revText} labelText = "Write a Review?" />  
+                                <ReviewForm handleSubmit={addReview} revText={revText} ratingRef={ratingRef} labelText = "Comenta qué tal te pareció la película" />  
                             </Col>
                         </Row>
                         <Row>
@@ -71,7 +98,7 @@ const Reviews = ({getMovieData,movie,reviews,setReviews}) => {
                         return(
                             <React.Fragment key={idx}>
                                 <Row>
-                                    <Col>{r.body}</Col>
+                                    <Col><strong>{r.username}</strong>:{r.body}</Col>
                                 </Row>
                                 <Row>
                                     <Col>
