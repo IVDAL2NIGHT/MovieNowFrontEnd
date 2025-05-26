@@ -66,3 +66,23 @@
         top:20px;
     }
 }
+
+.show-more-button {
+    background-color: #17a2b8;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 18px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.show-more-button:hover {
+    background-color: #138496;
+}
+.genre-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
