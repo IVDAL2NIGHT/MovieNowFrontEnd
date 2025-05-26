@@ -1,19 +1,21 @@
-import {useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import api from '../../api/axiosConfig';
 import {useParams} from 'react-router-dom';
 import {Container, Row, Col} from 'react-bootstrap';
 import ReviewForm from '../reviewForm/ReviewForm';
 import { username } from '../../api/axiosConfig';
 
+
 import React from 'react'
 
 
 const Reviews = ({getMovieData,movie,reviews,setReviews}) => {
-
+    const [ratings, setRatings] = useState([]);
     const revText = useRef();
     let params = useParams();
     const movieId = params.movieId;
     const ratingRef = useRef();
+    
 
     useEffect(()=>{
         getMovieData(movieId);
@@ -47,6 +49,11 @@ const Reviews = ({getMovieData,movie,reviews,setReviews}) => {
 
 
     }
+
+        
+
+
+
 
   return (
     <Container>
@@ -93,22 +100,23 @@ const Reviews = ({getMovieData,movie,reviews,setReviews}) => {
                         </Row>
                     </>
                 }
-                {
-                    reviews?.map((r, idx) => {
-                        return(
-                            <React.Fragment key={idx}>
-                                <Row>
-                                    <Col><strong>{r.username}</strong>:{r.body}</Col>
-                                </Row>
-                                <Row>
-                                    <Col>
-                                        <hr />
-                                    </Col>
-                                </Row>                                
-                            </React.Fragment>
-                        )
-                    })
-                }
+                
+                
+                {reviews?.map((r, idx) => (
+                    <div key={idx}>
+                    <p>{r.body}</p>
+                    {/* Aquí agregas la calificación si existe */}
+                    {r.rating && (
+                    <p>
+                    <strong>Calificación:</strong> {r.rating}
+                    </p>
+                 )}
+                    <p>
+                    <strong>Usuario:</strong> {r.username}
+                    </p>
+                    <hr />
+                    </div>
+))}
             </Col>
         </Row>
         <Row>

@@ -7,6 +7,7 @@ import Home from './components/home/Home';
 import Header from './components/header/header';
 import Trailer from './components/trailer/trailer';
 import Reviews from './components/reviews/Reviews'; 
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
 
