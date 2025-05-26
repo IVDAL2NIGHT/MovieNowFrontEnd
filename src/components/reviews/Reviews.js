@@ -3,6 +3,7 @@ import api from '../../api/axiosConfig';
 import {useParams} from 'react-router-dom';
 import {Container, Row, Col} from 'react-bootstrap';
 import ReviewForm from '../reviewForm/ReviewForm';
+import { username } from '../../api/axiosConfig';
 
 import React from 'react'
 
@@ -23,7 +24,7 @@ const Reviews = ({getMovieData,movie,reviews,setReviews}) => {
 
         try
         {
-             await api.post("/api/v1/reviews",{reviewBody:rev.value,imdbId:movieId, username:"carlos1111"});
+             await api.post("/api/v1/reviews",{reviewBody:rev.value,imdbId:movieId, username:username});
 
             const updatedReviews = [...reviews, {body:rev.value}];
     
