@@ -1,9 +1,8 @@
 import {useEffect, useRef, useState} from 'react';
-import api from '../../api/axiosConfig';
+import api, { getUsername } from '../../api/axiosConfig';
 import {useParams} from 'react-router-dom';
 import {Container, Row, Col} from 'react-bootstrap';
 import ReviewForm from '../reviewForm/ReviewForm';
-import { username } from '../../api/axiosConfig';
 
 
 import React from 'react'
@@ -15,6 +14,7 @@ const Reviews = ({getMovieData,movie,reviews,setReviews}) => {
     let params = useParams();
     const movieId = params.movieId;
     const ratingRef = useRef();
+    const [currentUsername, setCurrentUsername] = useState(getUsername());
     
 
     useEffect(()=>{
@@ -30,11 +30,11 @@ const Reviews = ({getMovieData,movie,reviews,setReviews}) => {
 
         try
         {
-             await api.post("/api/v1/reviews",{reviewBody:rev.value,imdbId:movieId, username:username});
-             await api.post("/api/v1/rates",{imdbId:movieId, username:username, rating:rating});
+             await api.post("/api/v1/reviews",{reviewBody:rev.value,imdbId:movieId, username:currentUsername});
+             await api.post("/api/v1/rates",{imdbId:movieId, username:currentUsername, rating:rating});
 
 
-            const updatedReviews = [...reviews, {body:rev.value, username:username, rating:rating} ];
+            const updatedReviews = [...reviews, {body:rev.value, username:currentUsername, rating:rating} ];
     
             rev.value = "";
     
