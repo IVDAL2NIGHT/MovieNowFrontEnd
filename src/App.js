@@ -7,6 +7,7 @@ import Home from './components/home/Home';
 import Header from './components/header/header';
 import Trailer from './components/trailer/trailer';
 import Reviews from './components/reviews/Reviews'; 
+import Login from './components/Login/Login'; // Añadir esta importación
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -63,17 +64,12 @@ function App() {
       <Header/>
         <Routes>
           <Route path="/" element={<Layout />}>
-          <Route path="/" element={<Home movies={movies}/>} ></Route>
-          <Route path="/trailer/:ytTrailerId" element={<Trailer/>} ></Route>
-          <Route path="/reviews/:movieId" element ={<Reviews getMovieData = {getMovieData} movie={movie} reviews ={reviews} setReviews = {setReviews} />}></Route>
-  
-
-
-
+            <Route path="/" element={<Home movies={movies}/>} />
+            <Route path="/trailer/:ytTrailerId" element={<Trailer/>} />
+            <Route path="/reviews/:movieId" element={<Reviews getMovieData={getMovieData} movie={movie} reviews={reviews} setReviews={setReviews} />} />
+            <Route path="/login" element={<Login />} /> {/* Añadir esta ruta */}
           </Route>
         </Routes>
-
-
     </div>
   );
 }
